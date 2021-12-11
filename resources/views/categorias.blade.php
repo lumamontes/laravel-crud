@@ -78,13 +78,11 @@
             @endif
 
             <div class="content">
-
                 <div class="title m-b-md">
                     Laravel
                 </div>
 
                 <div class="links">
-                    <a href="{{ url('/produtos') }}">Produtos</a>
                     <a href="{{ url('/categorias') }}">Categorias</a>
                 </div>
             </div>
