@@ -15,10 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/produtos', function () {
-    return view('produtos');
-});
+Route::get('/produtos/listar', 'ProductController@listar');
 
-Route::get('/categorias', function () {
-    return view('categorias');
-});
+Route::get('/categorias/listar', 'CategoryController@listar');
