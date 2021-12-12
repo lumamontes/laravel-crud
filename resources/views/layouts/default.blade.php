@@ -52,6 +52,21 @@
         </style>
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div>
+                <a href="{{ url('/') }}" class="navbar-brand">CRUD - Laravel</a>
+            </div>
+            <div>
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a href="{{ url('/produtos/listar') }}" class="nav-link">Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('/categorias/listar') }}" class="nav-link">Categorias</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
         @yield('conteudo')
     </body>
 </html>

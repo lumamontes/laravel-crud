@@ -3,9 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use \App\Models\Category;
 
 class CategoryController extends Controller
 {
+    private $objCategory;
+
+    public function __construct(){
+        $this->objCategory = new Category();
+    }
+    public function index()
+    {
+     return view('categorias-cadastrar', ['categories' => $categories] );
+    }
+
     public function listar()
     {
      $categories = \App\Models\Category::all();
@@ -14,19 +25,40 @@ class CategoryController extends Controller
 
     public function create()
     {
-     $produtos = \App\Models\Product::all();
-     return view('produtos', ['produtos' => $produtos] );
+     return view('categorias.create');
+    }
+
+    public function store(Request $request)
+    {
+        $category= $this->objCategory->create([
+            'name'=>$request->name,
+            'slug'=> str_slug($request->name),
+            'description'=>$request->description
+        ]);
+        if($category){
+            return redirect('categorias/listar');
+        }
     }
  
-    public function update()
+    public function edit($id)
     {
-     $produtos = \App\Models\Product::all();
-     return view('produtos', ['produtos' => $produtos] );
+     $category = $this->objCategory->find($id);
+     return view('categorias.create', ['category' => $category] );
+    }
+
+    public function update(Request $request, $id)
+    {
+        $this->objCategory->where(['id' => $id])->update([
+            'name'=>$request->name,
+            'slug'=> str_slug($request->name),
+            'description'=>$request->description
+        ]);
+        return redirect('produtos/listar');
     }
  
-    public function delete()
+    public function destroy($id)
     {
-     $produtos = \App\Models\Product::all();
-     return view('produtos', ['produtos' => $produtos] );
+        $category = $this->objCategory->find($id)->delete();
+        return redirect('produtos/listar')->with('msg', 'Categoria excluída com sucesso.');
     }
 }
