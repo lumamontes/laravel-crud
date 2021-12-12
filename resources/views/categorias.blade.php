@@ -1,91 +1,58 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.default')
 
-        <title>LaravelSS</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
-                    @endif
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="{{ url('/categorias') }}">Categorias</a>
-                </div>
-            </div>
+@section('conteudo')
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div>
+            <a href="{{ url('/') }}" class="navbar-brand">CRUD - Laravel</a>
         </div>
-    </body>
-</html>
+        <div>
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a href="{{ url('/produtos/listar') }}" class="nav-link">Produtos</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url('/categorias/listar') }}" class="nav-link">Categorias</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+<div class="flex-center position-ref full-height">
+    <div class="categories-container">
+        <div class="spaced-contend">
+            <h1>Categorias</h1>
+            <button type="button" class="btn btn-success btn-sm">+ Adicionar</button>
+        </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th  scope="col">#</th>
+                    <th  scope="col">Nome</th>
+                    <th  scope="col">Descrição</th>
+                    <th  scope="col">Ações</th>
+                </tr>
+                </thead>
+                @forelse ($categories as $categorie)
+                    <tbody>
+                    <tr class="table-light">
+                        <th scope="row">
+                            {{$categorie->id}}
+                        </th>
+                        <td scope="row">
+                            {{$categorie->name}}
+                        </td>
+                        <td scope="row">
+                            {{isset($categorie->description) ? $categorie->description : '-'}}
+                        </td>
+                        <td scope="row">
+                                <button class="btn btn-info btn-sm">Editar</button>
+                                <button class="btn btn-danger btn-sm">Deletar</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                @empty
+            </table>
+                Não encontramos registros.
+            @endforelse
+    </div>
+</div>
+@stop
