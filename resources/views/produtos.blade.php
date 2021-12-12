@@ -1,25 +1,12 @@
 @extends('layouts.default')
 @section('conteudo')
 <div class="flex-center position-ref full-height">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div>
-            <a href="{{ url('/') }}" class="navbar-brand">  CRUD - Laravel</a>
-        </div>
-        <div>
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a href="{{ url('/produtos/listar') }}" class="nav-link">Produtos</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ url('/categorias/listar') }}" class="nav-link">Categorias</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
     <div class="product-container">
         <div class="spaced-contend">
             <h1>Produtos</h1>
-            <button type="button" class="btn btn-success btn-sm">+ Adicionar</button>
+            <a href="/produtos/cadastrar">
+                <button type="button" class="btn btn-success btn-sm">+ Adicionar</button>
+            </a>
         </div>
             <table class="table">
                 <thead>
@@ -51,8 +38,15 @@
                             {{isset($produto->description) ? $produto->description : '-'}}
                         </td>
                         <td scope="row">
+                            <a href="{{url("produtos/$produto->id/edit")}}">
                                 <button class="btn btn-info btn-sm">Editar</button>
-                                <button class="btn btn-danger btn-sm">Deletar</button>
+                            </a>
+                                <form action="/produtos/{{$produto->id}}/delete" method="POST">
+                                    {!! csrf_field() !!}
+                                    {{ method_field('DELETE') }}
+                                    <button type="submit"class="btn btn-danger btn-sm">Deletar</button>
+                                </form>
+                            </form>
                         </td>
                     </tr>
                     </tbody>

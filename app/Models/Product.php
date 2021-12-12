@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    //
+    protected $fillable = [
+        'name',
+        'slug',
+        'description',
+        'price',
+        'category_id',
+    ];
     protected $table = 'products';
 
-    public function relCategories()
-    {
-        return $this->hasOne(Category::class, 'foreign_key', 'local_key');
-    }
 
 }
